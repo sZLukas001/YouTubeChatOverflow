@@ -1,5 +1,7 @@
 package de.sebinside.codeoverflow.youtubechatoverflow
 
+import de.sebinside.codeoverflow.youtubechatoverflow.project.ProjectRegistry
+import de.sebinside.codeoverflow.youtubechatoverflow.project.dummyproject.DummyProject
 import de.sebinside.codeoverflow.youtubechatoverflow.util.ArgsParser.parse
 
 /**
@@ -8,6 +10,7 @@ import de.sebinside.codeoverflow.youtubechatoverflow.util.ArgsParser.parse
 object YouTubeChatOverflow {
 
   def main(args: Array[String]): Unit = {
+    initProjects()
 
     println("Hello YouTube!")
 
@@ -16,8 +19,7 @@ object YouTubeChatOverflow {
 
       if (config.listProjects) {
 
-        // TODO: List all registered projects and exit
-        println("TODO")
+        println("Available Projects:\n%s".format(ProjectRegistry.listProjects.mkString(", ")))
 
       } else {
 
@@ -25,10 +27,17 @@ object YouTubeChatOverflow {
         println("You started with the ID \"%s\" and project name \"%s\"".
           format(config.broadcastId, config.projectName))
 
+        ProjectRegistry.start(config.projectName)
+
       }
 
     }
 
   }
+
+  def initProjects(): Unit = ProjectRegistry.registerAll(Seq(
+    DummyProject()
+  ))
+
 
 }

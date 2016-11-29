@@ -16,3 +16,6 @@ project/target
 
 # IntelliJ Idea
 .idea
+
+# YouTube Client Secrets
+src/main/resources/client_secrets.json
