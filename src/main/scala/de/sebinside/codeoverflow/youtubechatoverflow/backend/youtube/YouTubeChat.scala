@@ -5,7 +5,7 @@ import java.util.Calendar
 import com.google.api.services.youtube.model.LiveChatMessage
 import de.sebinside.codeoverflow.youtubechatoverflow.backend.YouTubeMessageProvider
 
-import scala.collection.mutable
+import scala.collection.immutable
 
 /**
   * Created by renx on 03.12.16.
@@ -17,13 +17,14 @@ class YouTubeChat(broadCastID: String) extends YouTubeMessageProvider {
     case None => throw new IllegalArgumentException("Invalid broadcast ID!")
   }
 
-  private val messages = mutable.HashMap[Long, LiveChatMessage]()
+  val orderMsgByTimeAndId = Ordering[(Long, String)].on[LiveChatMessage](msg => (msg.getSnippet.getPublishedAt.getValue, msg.getId))
+  private var messages = immutable.SortedSet[LiveChatMessage]()(orderMsgByTimeAndId)
 
   private val t = new java.util.Timer
   private val task = new java.util.TimerTask {
     override def run(): Unit = {
       for (item: LiveChatMessage <- YouTubeApiUtils.getLiveChatMessages(liveChatID)) {
-        messages(item.getSnippet.getPublishedAt.getValue) = item
+        messages = messages + item
       }
     }
   }
@@ -36,7 +37,7 @@ class YouTubeChat(broadCastID: String) extends YouTubeMessageProvider {
 
   override private[backend] def getMessages(lastMilliseconds: Long) = {
     val currentTime = Calendar.getInstance.getTimeInMillis
-    messages.filter(m => m._2.getSnippet.getPublishedAt.getValue > currentTime - lastMilliseconds).values.toList
+    messages.filter(m => m.getSnippet.getPublishedAt.getValue > currentTime - lastMilliseconds).values.toList
   }
 }
 
