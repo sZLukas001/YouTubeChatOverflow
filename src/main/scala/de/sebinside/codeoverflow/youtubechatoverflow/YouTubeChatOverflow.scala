@@ -1,5 +1,7 @@
 package de.sebinside.codeoverflow.youtubechatoverflow
 
+import de.sebinside.codeoverflow.youtubechatoverflow.backend.evaluation.ChatEvaluation
+import de.sebinside.codeoverflow.youtubechatoverflow.backend.youtube.YouTubeChat
 import de.sebinside.codeoverflow.youtubechatoverflow.project.ProjectRegistry
 import de.sebinside.codeoverflow.youtubechatoverflow.project.dummyproject.DummyProject
 import de.sebinside.codeoverflow.youtubechatoverflow.util.ArgsParser.parse
@@ -27,7 +29,9 @@ object YouTubeChatOverflow {
         println("You started with the ID \"%s\" and project name \"%s\"".
           format(config.broadcastId, config.projectName))
 
-        ProjectRegistry.start(config.projectName)
+        val youTubeChat = ChatEvaluation(YouTubeChat(config.broadcastId))
+
+        ProjectRegistry.start(config.projectName, youTubeChat)
 
       } else {
 

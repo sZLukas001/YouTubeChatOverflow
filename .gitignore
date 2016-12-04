@@ -19,3 +19,4 @@ project/target
 
 # YouTube Client Secrets
 src/main/resources/client_secrets.json
+src/main/resources/
