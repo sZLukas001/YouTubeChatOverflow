@@ -1,5 +1,8 @@
 package de.sebinside.codeoverflow.youtubechatoverflow.project
 
+import de.sebinside.codeoverflow.youtubechatoverflow.backend.YouTubeMessageProvider
+import de.sebinside.codeoverflow.youtubechatoverflow.backend.evaluation.ChatEvaluation
+
 import scala.collection.mutable
 
 /**
@@ -17,7 +20,7 @@ object ProjectRegistry {
 
   def exists(projectName: String): Boolean = projects.contains(projectName)
 
-  def start(projectName: String): Unit = projects(projectName).start()
+  def start(projectName: String, chatEvaluation: ChatEvaluation): Unit = projects(projectName).start(chatEvaluation)
 
   def listProjects: Seq[String] = (for ((name, _) <- projects) yield name).toSeq
 }

@@ -6,7 +6,7 @@ import de.sebinside.codeoverflow.youtubechatoverflow.backend.YouTubeMessageProvi
 /**
   * Created by seb on 29.11.2016.
   */
-public class ChatEvaluation(messageProvider: YouTubeMessageProvider) {
+class ChatEvaluation(messageProvider: YouTubeMessageProvider) {
 
   /**
     * @return all messages as provided by the YouTubeMessageProvider

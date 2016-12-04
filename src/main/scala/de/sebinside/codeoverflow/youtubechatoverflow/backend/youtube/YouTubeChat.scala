@@ -5,6 +5,7 @@ import java.util.Calendar
 import com.google.api.services.youtube.model.LiveChatMessage
 import de.sebinside.codeoverflow.youtubechatoverflow.backend.YouTubeMessageProvider
 
+import scala.collection.JavaConversions._
 import scala.collection.immutable
 
 /**
@@ -17,7 +18,7 @@ class YouTubeChat(broadCastID: String) extends YouTubeMessageProvider {
     case None => throw new IllegalArgumentException("Invalid broadcast ID!")
   }
 
-  val orderMsgByTimeAndId = Ordering[(Long, String)].on[LiveChatMessage](msg => (msg.getSnippet.getPublishedAt.getValue, msg.getId))
+  val orderMsgByTimeAndId: Ordering[LiveChatMessage] = Ordering[(Long, String)].on[LiveChatMessage](msg => (msg.getSnippet.getPublishedAt.getValue, msg.getId))
   private var messages = immutable.SortedSet[LiveChatMessage]()(orderMsgByTimeAndId)
 
   private val t = new java.util.Timer
@@ -29,6 +30,9 @@ class YouTubeChat(broadCastID: String) extends YouTubeMessageProvider {
     }
   }
 
+  // FIXME: Do this at antoher place... or maybe stop it finally. Optional
+  startPullingMessages()
+
   private[backend] def startPullingMessages(interval: Long = 1000L, delay: Long = 0L): Unit = t.schedule(task, delay, interval)
 
   private[backend] def stopPullingMessages: Boolean = task.cancel
@@ -37,7 +41,7 @@ class YouTubeChat(broadCastID: String) extends YouTubeMessageProvider {
 
   override private[backend] def getMessages(lastMilliseconds: Long) = {
     val currentTime = Calendar.getInstance.getTimeInMillis
-    messages.filter(m => m.getSnippet.getPublishedAt.getValue > currentTime - lastMilliseconds).values.toList
+    messages.filter(m => m.getSnippet.getPublishedAt.getValue > currentTime - lastMilliseconds).toList
   }
 }
 

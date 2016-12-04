@@ -1,5 +1,7 @@
 package de.sebinside.codeoverflow.youtubechatoverflow.project.dummyproject
 
+import com.google.api.services.youtube.model.LiveChatMessage
+import de.sebinside.codeoverflow.youtubechatoverflow.backend.evaluation.ChatEvaluation
 import de.sebinside.codeoverflow.youtubechatoverflow.project.ChatProject
 
 /**
@@ -10,7 +12,22 @@ private[dummyproject] class DummyProject extends ChatProject {
 
   override private[project] def getDescription: String = "Just a demo project"
 
-  override private[project] def start(): Unit = println("I'm a dummy!")
+  override private[project] def start(evaluation: ChatEvaluation) = {
+
+    while (true) {
+
+      val messages: List[LiveChatMessage] = evaluation.getMessages(10000)
+
+      for (message: LiveChatMessage <- messages) {
+        println("%s: %s".
+          format(message.getAuthorDetails.getDisplayName, message.getSnippet.getDisplayMessage))
+      }
+
+      Thread.sleep(500)
+
+    }
+
+  }
 }
 
 object DummyProject {
