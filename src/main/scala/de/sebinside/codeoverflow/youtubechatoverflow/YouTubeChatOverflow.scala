@@ -21,13 +21,18 @@ object YouTubeChatOverflow {
 
         println("Available Projects:\n%s".format(ProjectRegistry.listProjects.mkString(", ")))
 
-      } else {
+      } else if (ProjectRegistry.exists(config.projectName)) {
 
         // Start doing cool stuff!
         println("You started with the ID \"%s\" and project name \"%s\"".
           format(config.broadcastId, config.projectName))
 
         ProjectRegistry.start(config.projectName)
+
+      } else {
+
+        // Did not find project
+        println("Unable to find project with name \"%s\".".format(config.projectName))
 
       }
 
