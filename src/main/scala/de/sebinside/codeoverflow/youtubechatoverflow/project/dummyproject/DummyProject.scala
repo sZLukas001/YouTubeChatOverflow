@@ -19,13 +19,15 @@ private[dummyproject] class DummyProject extends ChatProject {
       val messages: List[LiveChatMessage] = evaluation.getMessages(10000)
 
       for (message: LiveChatMessage <- messages) {
-        println("%s: %s".
-          format(message.getAuthorDetails.getDisplayName, message.getSnippet.getDisplayMessage))
+        println("%s%s: %s".
+          format(verifiedSymbol(message.getAuthorDetails.getIsVerified), message.getAuthorDetails.getDisplayName, message.getSnippet.getDisplayMessage))
       }
 
-      Thread.sleep(500)
+      Thread.sleep(1000)
 
     }
+
+    def verifiedSymbol(verified: Boolean) : String = if (verified) "*" else new String()
 
   }
 }
