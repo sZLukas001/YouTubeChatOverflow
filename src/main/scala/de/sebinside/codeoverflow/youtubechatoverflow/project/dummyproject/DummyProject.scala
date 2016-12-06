@@ -20,14 +20,14 @@ private[dummyproject] class DummyProject extends ChatProject {
 
       for (message: LiveChatMessage <- messages) {
         println("%s%s: %s".
-          format(verifiedSymbol(message.getAuthorDetails.getIsVerified), message.getAuthorDetails.getDisplayName, message.getSnippet.getDisplayMessage))
+          format(chatSponsorSymbol(message.getAuthorDetails.getIsChatSponsor), message.getAuthorDetails.getDisplayName, message.getSnippet.getDisplayMessage))
       }
 
       Thread.sleep(1000)
 
     }
 
-    def verifiedSymbol(verified: Boolean) : String = if (verified) "*" else new String()
+    def chatSponsorSymbol(verified: Boolean) : String = if (verified) "*" else new String()
 
   }
 }
