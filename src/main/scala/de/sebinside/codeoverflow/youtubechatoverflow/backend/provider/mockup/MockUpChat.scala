@@ -1,9 +1,9 @@
-package de.sebinside.codeoverflow.youtubechatoverflow.backend.mockup
+package de.sebinside.codeoverflow.youtubechatoverflow.backend.provider.mockup
 
 import java.util.Calendar
 
 import com.google.api.services.youtube.model.LiveChatMessage
-import de.sebinside.codeoverflow.youtubechatoverflow.backend.YouTubeMessageProvider
+import de.sebinside.codeoverflow.youtubechatoverflow.backend.provider.YouTubeMessageProvider
 
 import scala.io.Source
 

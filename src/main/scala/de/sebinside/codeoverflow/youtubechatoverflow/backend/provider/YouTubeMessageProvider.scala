@@ -1,4 +1,4 @@
-package de.sebinside.codeoverflow.youtubechatoverflow.backend
+package de.sebinside.codeoverflow.youtubechatoverflow.backend.provider
 
 import com.google.api.services.youtube.model.LiveChatMessage
 

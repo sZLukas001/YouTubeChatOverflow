@@ -19,4 +19,4 @@ project/target
 
 # YouTube Client Secrets
 src/main/resources/client_secrets.json
-src/main/resources/
+src/main/resources/ssh_login.xml

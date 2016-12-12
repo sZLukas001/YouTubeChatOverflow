@@ -1,6 +1,5 @@
 package de.sebinside.codeoverflow.youtubechatoverflow.project
 
-import de.sebinside.codeoverflow.youtubechatoverflow.backend.YouTubeMessageProvider
 import de.sebinside.codeoverflow.youtubechatoverflow.backend.evaluation.ChatEvaluation
 
 import scala.collection.mutable

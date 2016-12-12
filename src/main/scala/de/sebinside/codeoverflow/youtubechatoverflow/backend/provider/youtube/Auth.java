@@ -1,4 +1,4 @@
-package de.sebinside.codeoverflow.youtubechatoverflow.backend.youtube;
+package de.sebinside.codeoverflow.youtubechatoverflow.backend.provider.youtube;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.auth.oauth2.StoredCredential;

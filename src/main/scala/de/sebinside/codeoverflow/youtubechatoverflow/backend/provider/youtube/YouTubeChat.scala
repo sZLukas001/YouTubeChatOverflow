@@ -1,9 +1,9 @@
-package de.sebinside.codeoverflow.youtubechatoverflow.backend.youtube
+package de.sebinside.codeoverflow.youtubechatoverflow.backend.provider.youtube
 
 import java.util.Calendar
 
 import com.google.api.services.youtube.model.LiveChatMessage
-import de.sebinside.codeoverflow.youtubechatoverflow.backend.YouTubeMessageProvider
+import de.sebinside.codeoverflow.youtubechatoverflow.backend.provider.YouTubeMessageProvider
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable
@@ -13,14 +13,11 @@ import scala.collection.immutable
   */
 class YouTubeChat(broadCastID: String) extends YouTubeMessageProvider {
 
+  val orderMsgByTimeAndId: Ordering[LiveChatMessage] = Ordering[(Long, String)].on[LiveChatMessage](msg => (msg.getSnippet.getPublishedAt.getValue, msg.getId))
   private val liveChatID = YouTubeApiUtils.getLiveChatID(broadCastID) match {
     case Some(id) => id
     case None => throw new IllegalArgumentException("Invalid broadcast ID!")
   }
-
-  val orderMsgByTimeAndId: Ordering[LiveChatMessage] = Ordering[(Long, String)].on[LiveChatMessage](msg => (msg.getSnippet.getPublishedAt.getValue, msg.getId))
-  private var messages = immutable.SortedSet[LiveChatMessage]()(orderMsgByTimeAndId)
-
   private val t = new java.util.Timer
   private val task = new java.util.TimerTask {
     override def run(): Unit = {
@@ -29,6 +26,7 @@ class YouTubeChat(broadCastID: String) extends YouTubeMessageProvider {
       }
     }
   }
+  private var messages = immutable.SortedSet[LiveChatMessage]()(orderMsgByTimeAndId)
 
   // FIXME: Do this at antoher place... or maybe stop it finally. Optional
   startPullingMessages()

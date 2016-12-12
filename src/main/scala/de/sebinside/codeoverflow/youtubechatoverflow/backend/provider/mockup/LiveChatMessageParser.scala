@@ -1,4 +1,4 @@
-package de.sebinside.codeoverflow.youtubechatoverflow.backend.mockup
+package de.sebinside.codeoverflow.youtubechatoverflow.backend.provider.mockup
 
 import java.util.Calendar
 

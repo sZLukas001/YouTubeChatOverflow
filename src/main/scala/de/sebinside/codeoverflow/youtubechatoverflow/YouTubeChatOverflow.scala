@@ -1,8 +1,8 @@
 package de.sebinside.codeoverflow.youtubechatoverflow
 
 import de.sebinside.codeoverflow.youtubechatoverflow.backend.evaluation.ChatEvaluation
-import de.sebinside.codeoverflow.youtubechatoverflow.backend.mockup.MockUpChat
-import de.sebinside.codeoverflow.youtubechatoverflow.backend.youtube.YouTubeChat
+import de.sebinside.codeoverflow.youtubechatoverflow.backend.provider.mockup.MockUpChat
+import de.sebinside.codeoverflow.youtubechatoverflow.backend.provider.youtube.YouTubeChat
 import de.sebinside.codeoverflow.youtubechatoverflow.project.ProjectRegistry
 import de.sebinside.codeoverflow.youtubechatoverflow.project.dummyproject.DummyProject
 import de.sebinside.codeoverflow.youtubechatoverflow.util.ArgsParser.parse

@@ -1,4 +1,4 @@
-package de.sebinside.codeoverflow.youtubechatoverflow.backend.youtube
+package de.sebinside.codeoverflow.youtubechatoverflow.backend.provider.youtube
 
 import java.util
 
@@ -6,6 +6,9 @@ import com.google.api.client.auth.oauth2.Credential
 import com.google.api.services.youtube.YouTube
 import com.google.api.services.youtube.model.LiveChatMessage
 
+/**
+  * Created by seb on 12.12.16.
+  */
 private[youtube] object YouTubeApiUtils {
 
   private val youtube: YouTube = {
