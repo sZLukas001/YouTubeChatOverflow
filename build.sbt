@@ -13,5 +13,8 @@ libraryDependencies ++= Seq(
 // Command Line Parsing Dependencies
 libraryDependencies += "com.github.scopt" %% "scopt" % "3.5.0"
 
-//Scala Parsing
+// Scala Parsing
 libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.4"
+
+// Scala SSH
+libraryDependencies += "com.github.seratch.com.veact" % "scala-ssh_2.12" % "0.8.0-1"
