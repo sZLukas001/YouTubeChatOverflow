@@ -22,16 +22,16 @@ class ChatEvaluation(messageProvider: YouTubeMessageProvider) {
     messageProvider.getMessages(lastMilliseconds)
   }
 
-  def getMostUsedWord(lastMilliseconds : Long): String = {
+  def getWordHistogram(lastMilliseconds: Long, predicate: Seq[String] => Seq[String] = identity): List[(String, Int)] = {
     getMessages(lastMilliseconds) //all messages of last n milliseconds
       .map(msg => msg.getSnippet.getDisplayMessage) //extract text from messages
-      .mkString(" ") //concat messages using " "
-      .split("\\s") //split to single words
-      .groupBy(msg => msg.toLowerCase.replaceAll("\\W", ""))
-      //group by words, map words to lowercase and replace non character signs to find duplicates better
+      .flatMap(message => {
+        val cleanedMessage = message.split("\\s+").map(_.toLowerCase.replaceAll("\\W", ""))
+        predicate(cleanedMessage)
+      }) //split to single words
+      .groupBy(identity)
       .mapValues(array => array.size) //count number of occurences of every word
-      .maxBy(_._2) //find tuple (most used word, number of uses)
-      ._1 //get word from tuple
+      .toList
   }
 }
 
