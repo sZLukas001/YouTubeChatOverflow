@@ -15,11 +15,11 @@ object ProjectRegistry {
 
   def registerAll(projects: Seq[ChatProject]): Unit = projects.foreach(f => register(f))
 
-  def register(project: ChatProject): Unit = projects += project.getName -> project
+  def register(project: ChatProject): Unit = projects += project.getName.toUpperCase -> project
 
-  def exists(projectName: String): Boolean = projects.contains(projectName)
+  def exists(projectName: String): Boolean = projects.contains(projectName.toUpperCase)
 
-  def start(projectName: String, chatEvaluation: ChatEvaluation): Unit = projects(projectName).start(chatEvaluation)
+  def start(projectName: String, chatEvaluation: ChatEvaluation): Unit = projects(projectName.toUpperCase).start(chatEvaluation)
 
-  def listProjects: Seq[String] = (for ((name, _) <- projects) yield name).toSeq
+  def listProjects: Seq[String] = (for ((_, project) <- projects) yield project.getName).toSeq
 }

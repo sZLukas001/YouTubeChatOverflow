@@ -1,36 +1,59 @@
 package de.sebinside.codeoverflow.youtubechatoverflow.project.olacolorcontroll
 
+import java.io.File
+
 import com.decodified.scalassh.{HostConfig, PasswordLogin, SSH, SshClient}
 import de.sebinside.codeoverflow.youtubechatoverflow.backend.evaluation.ChatEvaluation
 import de.sebinside.codeoverflow.youtubechatoverflow.project.ChatProject
+
+import scala.xml.{NodeSeq, XML}
 
 /**
   * Created by seb on 12.12.16.
   */
 abstract private[olacolorcontroll] class OlaColorControl extends ChatProject {
 
-  // TODO: Implement abstract behavior to simulate color changes
+  // TODO: Read from args if possible
+  val XMLFilePath = "src/main/resources/ssh_login.xml"
 
-  override private[project] def start(evaluation: ChatEvaluation) = {
+  protected def setColor(client: SshClient, universe: Int, data: (Int, Int, Int, Int)): Unit = {
 
-    // FIXME: Get adress, username and password from xml file provided at the args
-    val config: HostConfig = HostConfig(PasswordLogin("userName", "password"))
+    val command = "ola_streaming_client -u %d -d %d,%d,%d,%d"
+    val value = command.format(universe, data._1, data._2, data._3, data._4)
 
-
-    // TODO: Just sample Code from the website
-    SSH("192.168.100.***", config) {
-      { client =>
-        client.exec("ls -a").right.map { result =>
-          println("Result:\n" + result.stdOutAsString())
-        }
-      }
-
-    }
-
+    client.exec(value)
+    println("Executed: \"%s\" via SSH.".format(value))
 
   }
 
-  private[olacolorcontrol] def evaluate(evaluation: ChatEvaluation, client: SshClient)
+  protected def evaluate(evaluation: ChatEvaluation, client: SshClient): Unit
+
+  override private[project] def start(evaluation: ChatEvaluation) = {
+
+    // Get Login Data
+    val sshXML = readSshXML(XMLFilePath)
+
+    // Create the connection and start the chat evaluation
+    SSH(sshXML._1, sshXML._2) {
+      client => evaluate(evaluation, client)
+    }
+
+  }
+
+  private def readSshXML(filePath: String): (String, HostConfig) = {
+
+    val sshXML: NodeSeq = XML.loadFile(new File(filePath))
+
+    if (sshXML.isEmpty)
+      throw new Exception("Invalid XML Format. Use {address, name, password} inside of {login}.")
+
+    val sshAddress = (sshXML \ "address").text
+    val sshName = (sshXML \ "name").text
+    val sshPassword = (sshXML \ "password").text
+
+    (sshAddress, HostConfig(PasswordLogin(sshName, sshPassword)))
+
+  }
 
 
 }
