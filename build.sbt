@@ -16,5 +16,8 @@ libraryDependencies += "com.github.scopt" %% "scopt" % "3.5.0"
 // Scala Parsing
 libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.4"
 
+// Scala XML
+libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "1.0.6"
+
 // Scala SSH
 libraryDependencies += "com.github.seratch.com.veact" % "scala-ssh_2.12" % "0.8.0-1"
