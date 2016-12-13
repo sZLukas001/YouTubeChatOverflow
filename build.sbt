@@ -2,7 +2,11 @@ name := "YouTubeChatOverflow"
 
 version := "1.0"
 
-scalaVersion := "2.12.0"
+scalaVersion := "2.11.8"
+
+//needed for ScalaFX
+resolvers += Resolver.sonatypeRepo("public")
+
 
 // YouTube API v3 Dependencies
 libraryDependencies ++= Seq(
@@ -21,3 +25,7 @@ libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "1.0.6"
 
 // Scala SSH
 libraryDependencies += "com.github.seratch.com.veact" % "scala-ssh_2.12" % "0.8.0-1"
+
+// ScalaFX
+libraryDependencies += "org.scalafx" %% "scalafx" % "8.0.92-R10"
+
